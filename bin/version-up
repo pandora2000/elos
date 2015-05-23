@@ -29,11 +29,10 @@ specified_vers ||=
 later_version!(specified_vers, vers)
 
 path = File.expand_path('../..', __FILE__)
-ver = specified_vers.join('.')
-`cd #{path}`
-`sed -i -e 's/#{Elos::VERSION}/#{ver}/g' #{path}/lib/elos/version.rb`
+new_ver = specified_vers.join('.')
+`sed -i -e 's/#{Elos::VERSION}/#{new_ver}/g' #{path}/lib/elos/version.rb`
 `git add --all`
-`git commit -m 'version #{vers.join('.')}'`
+`git commit -m 'version #{new_ver}'`
 `git push origin master`
-`git tag #{ver}`
-`git push origin #{ver}`
+`git tag #{new_ver}`
+`git push origin #{new_ver}`
