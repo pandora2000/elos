@@ -37,5 +37,4 @@ new_ver = specified_vers.join('.')
 `git tag #{new_ver}`
 `git push origin #{new_ver}`
 `gem build elos.gemspec`
-puts "gem push elos-#{new_ver}.gem"
-`gem push elos-#{new_ver}.gem 2>&1`
+puts `gem push elos-#{new_ver}.gem 2>&1`
