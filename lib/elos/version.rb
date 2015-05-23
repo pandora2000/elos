@@ -1,3 +1,3 @@
-module Elos
-  VERSION = "0.1.0"
+class Elos
+  VERSION = "1.0.0"
 end

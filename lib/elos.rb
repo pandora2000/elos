@@ -1,5 +1,5 @@
-require "elos/version"
+require_relative 'initialize'
 
-module Elos
-  # Your code goes here...
+class Elos
+  include Elos::Configuration
 end

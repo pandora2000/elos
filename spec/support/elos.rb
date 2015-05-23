@@ -1,0 +1,1 @@
+Elos.config(env: 'test')
