@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "elos"
+
+def versions(version_string)
+  vers = version_string.split('.').map(&:to_i)
+  fail 'Invalid version format!' unless vers.length == 3
+  vers
+end
+
+def later_version!(vers1, vers2)
+  [vers1, vers2].transpose.each do |ver1, ver2|
+    return if ver1 > ver2
+    fail 'Not later version!' if ver1 < ver2
+  end
+  fail 'Not later version!'
+end
+
+specified_vers = versions(ARGV[0]) if ARGV.length > 0
+vers = versions(Elos::VERSION)
+specified_vers ||=
+  begin
+    r = vers.dup
+    r[2] = r[2] + 1
+  end
+
+later_version!(specified_vers, vers)
+
+path = File.expand_path('../..', __FILE)
+`cd #{path}`
+`sed -i -e 's/#{Elos::VERSION}/#{specified_vers.join('.')}/g' #{path}/lib/elos/version.rb`
+`git add --all`
+`git commit -m 'version #{vers.join('.')}'`
