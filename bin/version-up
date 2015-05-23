@@ -23,11 +23,12 @@ specified_vers ||=
   begin
     r = vers.dup
     r[2] = r[2] + 1
+    r
   end
 
 later_version!(specified_vers, vers)
 
-path = File.expand_path('../..', __FILE)
+path = File.expand_path('../..', __FILE__)
 ver = specified_vers.join('.')
 `cd #{path}`
 `sed -i -e 's/#{Elos::VERSION}/#{ver}/g' #{path}/lib/elos/version.rb`
