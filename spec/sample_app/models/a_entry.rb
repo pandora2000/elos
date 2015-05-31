@@ -13,7 +13,7 @@ class AEntry
   end
 
   index_data ->(obj) do
-    { title: obj.title }
+    { title: obj.title, json: { description: obj.description }.to_json }
   end
 
   query_builder Elos::QueryBuilder::Builtin::MatchAllQueryBuilder

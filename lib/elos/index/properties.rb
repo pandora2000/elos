@@ -14,6 +14,10 @@ module Elos::Index::Properties
       { type: 'string', index: 'not_analyzed' }
     end
 
+    def no_index_string_property
+      { type: 'string', index: 'no' }
+    end
+
     def integer_property
       { type: 'integer' }
     end

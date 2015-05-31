@@ -1,5 +1,15 @@
 describe AEntry do
-  let(:field) { :title }
+  it_behaves_like 'index owner'
 
-  it_behaves_like 'subscriber'
+  describe '#title' do
+    let(:field) { :title }
+
+    it_behaves_like 'subscriber'
+  end
+
+  describe '#description' do
+    let(:field) { :description }
+
+    it_behaves_like 'subscriber'
+  end
 end

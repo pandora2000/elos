@@ -72,7 +72,12 @@ class Elos::Criteria < Elos::Result
     # puts JSON.pretty_generate(results)
     @total_count = search_result['hits']['total']
     @results = search_result['hits']['hits'].map do |h|
-      @klass.new(h['_source'].reverse_merge(score: h['_score'], highlight: h['highlight']).merge(id: h['_id'], _persisted: true))
+      source = h['_source']
+      if json = source.delete('json')
+        source.reverse_merge!(JSON.parse(json))
+      end
+      source.deep_symbolize_keys!
+      @klass.new(source.reverse_merge(score: h['_score'], highlight: h['highlight']).merge(id: h['_id'], _persisted: true))
     end
   end
 end
