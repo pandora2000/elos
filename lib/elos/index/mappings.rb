@@ -17,7 +17,7 @@ module Elos::Index::Mappings
     protected
 
     def set_mappings(mappings)
-      mps = mappings.deep_dup
+      mps = mappings.is_a?(Proc) ? mappings.() : mappings.deep_dup
       mps[type_name][:properties].merge!(_destroyed: boolean_property)
       self.mappings = mps
     end
