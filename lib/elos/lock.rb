@@ -1,6 +1,15 @@
 class Elos::Lock
   include Elos::Index::Core
   include Elos::Index::Properties
+  include Elos::Index::Mappings
+
+  mappings -> do
+    {
+      _all: { enabled: false },
+      _ttl: { enabled: true, default: '5d' },
+      properties: { lock: boolean_property }
+    }
+  end
 
   def self.lock(key, &block)
     create_index(index_name)
@@ -23,23 +32,5 @@ class Elos::Lock
   def self.unlock(key)
     client.delete(index: index_name, type: type_name, id: key)
   rescue Elasticsearch::Transport::Transport::Errors::NotFound
-  end
-
-  private
-
-  def self.mappings
-    {
-      type_name => {
-        _all: { enabled: false },
-        _ttl: { enabled: true, default: '5d' },
-        properties: properties
-      }
-    }
-  end
-
-  def self.properties
-    {
-      boolean_property => %i(lock)
-    }.inject({}) { |m, x| m.merge(Hash[x[1].map { |y| [y, x[0]] }]) }
   end
 end

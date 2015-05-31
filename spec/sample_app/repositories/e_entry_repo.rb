@@ -1,12 +1,12 @@
 class EEntryRepo
   include Elos::Repository::Adapter::Elos
 
-  mappings({
-    type_name => {
+  mappings -> do
+    {
       _all: { enabled: false },
       properties: { title: { type: 'string' } }
     }
-  })
+  end
 
   index_data ->(obj) do
     { title: obj.title }
