@@ -2,6 +2,7 @@ module Elos::Index
   extend ActiveSupport::Concern
 
   include Elos::Index::Core
+  include Elos::Index::Properties
   include Elos::Index::Mappings
   include Elos::Index::RawHelpers
   include Elos::Index::Refreshable

@@ -1,5 +1,6 @@
 class Elos::Lock
   include Elos::Index::Core
+  include Elos::Index::Properties
 
   def self.lock(key, &block)
     create_index(index_name)
@@ -40,9 +41,5 @@ class Elos::Lock
     {
       boolean_property => %i(lock)
     }.inject({}) { |m, x| m.merge(Hash[x[1].map { |y| [y, x[0]] }]) }
-  end
-
-  def self.boolean_property
-    { type: 'boolean' }
   end
 end
