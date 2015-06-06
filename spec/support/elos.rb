@@ -1,1 +1,1 @@
-Elos.config(env: 'test')
+Elos.config(env: :test)
