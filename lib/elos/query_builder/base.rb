@@ -17,7 +17,5 @@ class Elos::QueryBuilder::Base
 
   protected
 
-  def params
-    @params
-  end
+  attr_reader :params
 end
