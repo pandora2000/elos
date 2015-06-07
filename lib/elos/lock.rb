@@ -2,6 +2,7 @@ class Elos::Lock
   include Elos::Index::Core
   include Elos::Index::Properties
   include Elos::Index::Mappings
+  include Elos::Index::Attributes
 
   mappings -> do
     {

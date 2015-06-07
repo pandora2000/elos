@@ -18,6 +18,7 @@ module Elos::Index::Mappings
 
     def set_mappings(mappings)
       mps = mappings.is_a?(Proc) ? mappings.() : mappings.deep_dup
+      self.attributes = %i(id) + mps[:properties].keys
       mps[:properties].merge!(_destroyed: boolean_property, json: no_index_string_property) if respond_to?(:physically_destroy?) && physically_destroy?
       self.mappings = { type_name => mps }
     end

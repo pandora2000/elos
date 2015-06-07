@@ -14,6 +14,7 @@ module Elos::Index
     include Elos::Index::Searchable
     include Elos::Index::Locatable
     include Elos::Index::Subscribable
+    include Elos::Index::Attributes
     include Elos::Index::Model
   end
 end
