@@ -1,4 +1,6 @@
 class Elos::Criteria < Elos::Result
+  delegate :[], :length, to: :result
+
   def initialize(params:, query_builder_class:, klass:)
     @client = Elos.client
     @params = params
