@@ -61,7 +61,7 @@ class Elos::Criteria < Elos::Result
   end
 
   def query
-    @query_builder_class.new(@params)._build
+    @query_builder_class.new(@params.merge(class: @klass)).wrap_build
   end
 
   protected
