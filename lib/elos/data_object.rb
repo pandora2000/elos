@@ -7,9 +7,9 @@ class Elos::DataObject
   end
 
   def method_missing(method, *args, **hargs, &block)
-    if object.respond_to?(method)
-      object.send(method, *args)
-    elsif method.to_s.end_with?('=')
+    if method.to_s.end_with?('=')
+      object.send(method, objectify(args[0]))
+    elsif object.respond_to?(method)
       object.send(method, *args)
     else
       super

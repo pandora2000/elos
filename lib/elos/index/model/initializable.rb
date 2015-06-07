@@ -7,7 +7,7 @@ module Elos::Index::Model::Initializable
 
   def initialize(attrs = {})
     @_data = Elos::DataObject.new
-    @_attrs = attrs
+    @_attrs = attrs.merge(items: [{ hoge: 'hoge' }])
     run_callbacks :new
   end
 end
