@@ -17,6 +17,7 @@ module Elos::Index::Indexable
     def index(obj, destroy: false, unindex: false)
       if !unindex && data = index_data.(obj)
         data.merge!(_destroyed: destroy)
+        data[:json] = data[:json].to_json if data[:json]
         params = { index: write_alias_name, type: type_name, body: data }
         params.merge!(id: obj.id) if obj.id
         client.index(params)['_id']
