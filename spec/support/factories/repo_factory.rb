@@ -6,6 +6,7 @@ module SpecRepoFactory
       @@classes ||= []
       next if @@classes.empty?
       m = ActiveRecord::Migration.new
+      m.verbose = false
       @@classes.each do |klass|
         m.drop_table klass.name.underscore
       end
@@ -15,13 +16,12 @@ module SpecRepoFactory
 
   def create_repo_class(&block)
     m = ActiveRecord::Migration.new
-    klass = Class.new
+    m.verbose = false
+    klass = Class.new(ActiveRecord::Base)
     const_name = "Random#{SecureRandom.random_number(10000)}"
     Object.const_set(const_name, klass)
     klass.include Elos::Repository::Adapter::ActiveRecord
-    m.create_table klass.name.underscore do |t|
-      block.(t)
-    end
+    m.create_table(klass.name.underscore, &block)
     @@classes ||= []
     @@classes << klass
     klass
