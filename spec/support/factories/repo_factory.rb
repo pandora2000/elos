@@ -15,11 +15,10 @@ module SpecRepoFactory
 
   def create_repo_class(&block)
     m = ActiveRecord::Migration.new
-    klass = Class.new do
-      include Elos::Repository::Adapter::ActiveRecord
-    end
+    klass = Class.new
     const_name = "Random#{SecureRandom.random_number(10000)}"
     Object.const_set(const_name, klass)
+    klass.include Elos::Repository::Adapter::ActiveRecord
     m.create_table klass.name.underscore do |t|
       block.(t)
     end
