@@ -15,9 +15,7 @@ module Elos::Index::Indexable
     end
 
     def index(obj, destroy: false, unindex: false)
-      if !unindex && data = index_data.(obj)
-        data.merge!(_destroyed: destroy)
-        data[:json] = data[:json].to_json if data[:json]
+      if !unindex && data = wrap_index_data(obj, destroy)
         params = { index: write_alias_name, type: type_name, body: data }
         params.merge!(id: obj.id) if obj.id
         client.index(params)['_id']
@@ -28,6 +26,16 @@ module Elos::Index::Indexable
         rescue Elasticsearch::Transport::Transport::Errors::NotFound
         end
       end
+    end
+
+    private
+
+    def wrap_index_data(obj, destroy)
+      data = index_data.(obj)
+      return unless data
+      data.merge!(_destroyed: destroy)
+      data[:json] = Elos::Index::Model::Object.encode(data[:json]) if data[:json]
+      data
     end
   end
 end

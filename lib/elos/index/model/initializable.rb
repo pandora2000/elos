@@ -6,7 +6,7 @@ module Elos::Index::Model::Initializable
   end
 
   def initialize(attrs = {})
-    @_data = Elos::DataObject.new
+    @_data = Elos::Index::Model::Object.new
     @_attrs = attrs
     run_callbacks :new
   end
