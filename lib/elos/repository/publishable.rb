@@ -14,13 +14,15 @@ module Elos::Repository::Publishable
     end
   end
 
+  def publish_reindex
+    self.class.subscribers.each do |klass|
+      klass.index(self)
+    end
+  end
+
   class_methods do
     def publish_reindex
-      scan do |obj|
-        subscribers.each do |klass|
-          klass.index(obj)
-        end
-      end
+      scan(&:publish_reindex)
     end
   end
 end
