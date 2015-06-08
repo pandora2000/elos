@@ -3,20 +3,15 @@ describe Elos::Index::Attributes do
   let(:index_class) do
     create_index_class do
 
-  subscribe o.repo_class
+      subscribe o.repo_class
 
-  mappings -> do
-    {
-      _all: { enabled: false },
-      properties: { title: { type: 'string' } }
-    }
-  end
+      query_builder Elos::QueryBuilder::Builtin::MatchAllQueryBuilder
 
-  index_data ->(obj) do
-    { title: obj.title, json: { description: obj.description } }
-  end
+      field :title, :string
 
-  query_builder Elos::QueryBuilder::Builtin::MatchAllQueryBuilder
+      index_data ->(obj) do
+        { title: obj.title, json: { description: obj.description } }
+      end
     end
   end
 

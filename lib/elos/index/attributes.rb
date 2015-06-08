@@ -7,7 +7,7 @@ module Elos::Index::Attributes
 
   class_methods do
     def attribute_keys
-      self.set_attribute_keys ||= KeysGuesser.guess(given_mappings)
+      self.set_attribute_keys ||= KeysGuesser.guess(given_mappings, mappings_fields)
     end
   end
 end
